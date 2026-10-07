@@ -40,3 +40,33 @@ class Estoque:
             if nome.lower() in produto.nome.lower():
                 encontrados.append(produto)
         return encontrados
+
+    def editar(self, codigo, nome, categoria, preco, quantidade):
+        produto = self.buscar_por_codigo(codigo)
+        if produto is None:
+            return False
+
+        produto.nome = nome
+        produto.categoria = categoria
+        produto.preco = preco
+        produto.quantidade = quantidade
+        return True
+
+    def remover(self, codigo):
+        produto = self.buscar_por_codigo(codigo)
+        if produto is None:
+            return False
+
+        self.produtos.remove(produto)
+        self.produtos_ordenados.remove(produto)
+        return True
+
+    def vender(self, codigo, quantidade):
+        produto = self.buscar_por_codigo(codigo)
+        if produto is None:
+            return "Inexistente"
+        if quantidade > produto.quantidade:
+            return "Insuficiente"
+
+        produto.quantidade = produto.quantidade - quantidade
+        return "Ok"
