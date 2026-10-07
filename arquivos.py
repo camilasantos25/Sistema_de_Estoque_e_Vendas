@@ -17,21 +17,30 @@ def salvar(estoque, caminho):
 
 def carregar(caminho):
     estoque = Estoque()
+    avisos = []
 
     try:
         with open(caminho, "r", newline="", encoding="utf-8") as arquivo:
             leitor = csv.reader(arquivo)
             next(leitor, None)
+            numero_linha = 1
             for linha in leitor:
-                produto = Produto(
-                    int(linha[0]),
-                    linha[1],
-                    linha[2],
-                    float(linha[3]),
-                    int(linha[4]),
-                )
-                estoque.cadastrar(produto)
+                numero_linha = numero_linha + 1
+
+                try:
+                    produto = Produto(
+                        int(linha[0]),
+                        linha[1],
+                        linha[2],
+                        float(linha[3]),
+                        int(linha[4]),
+                    )
+                except (ValueError, IndexError) as erro:
+                    avisos.append("Linha " + str(numero_linha) + " ignorada: " + str(erro))
+                    continue
+                if not estoque.cadastrar(produto):
+                    avisos.append("Linha " + str(numero_linha) + " ignorada: código duplicado.")
     except FileNotFoundError:
         pass
 
-    return estoque
+    return estoque, avisos

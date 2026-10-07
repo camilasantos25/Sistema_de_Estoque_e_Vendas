@@ -1,3 +1,5 @@
+from produto import validar_preco, validar_quantidade
+
 class Estoque:
     def __init__(self):
         self.produtos = []
@@ -46,6 +48,9 @@ class Estoque:
         produto = self.buscar_por_codigo(codigo)
         if produto is None:
             return False
+
+        validar_preco(preco)
+        validar_quantidade(quantidade)
 
         produto.nome = nome
         produto.categoria = categoria

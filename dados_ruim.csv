@@ -1,0 +1,8 @@
+codigo,nome,categoria,preco,quantidade
+1,Caneta,Papelaria,2.5,10
+2,Lapis,Papelaria,-3,10
+abc,Borracha,Papelaria,1.5,10
+4,Caderno,Papelaria,15.9
+5,Mochila,Acessorios,120.0,-2
+1,Caneta Repetida,Papelaria,2.5,10
+6,Cola,Papelaria,4.0,30
