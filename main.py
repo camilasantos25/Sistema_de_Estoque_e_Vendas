@@ -1,23 +1,36 @@
 from produto import Produto
 from estoque import Estoque
 
+def mostrar(produtos):
+    if len(produtos) == 0:
+        print("  (nenhum produto)")
+    for produto in produtos:
+        print(" ", produto.codigo, produto.nome, "- qtd:", produto.quantidade)
+
 estoque = Estoque()
 
 estoque.cadastrar(Produto(50, "Caneta Vermelha", "Papelaria", 2.5, 100))
 estoque.cadastrar(Produto(12, "Caderno", "Papelaria", 15.9, 40))
 estoque.cadastrar(Produto(99, "Mochila", "Acessorios", 120.0, 8))
+estoque.cadastrar(Produto(7, "Caneta Preta", "Papelaria", 3.0, 60))
+estoque.cadastrar(Produto(30, "Borracha", "Papelaria", 1.5, 5))
 
-print("Vender 10 canetas:", estoque.vender(50, 10))
-print("Estoque da caneta:", estoque.buscar_por_codigo(50).quantidade)
+print("Por código:")
+mostrar(estoque.listar_ordenado())
 
-print("Vender 500 canetas:", estoque.vender(50, 500))
-print("Vender produto 1234:", estoque.vender(1234, 1))
+print("Categoria papelaria:")
+mostrar(estoque.listar_por_categoria("papelaria"))
 
-print("Editar caderno:", estoque.editar(12, "Caderno Grande", "Papelaria", 20.0, 35))
-print("Novo nome:", estoque.buscar_por_codigo(12).nome)
-print("Editar produto 1234:", estoque.editar(1234, "X", "Y", 1.0, 1))
+print("Categoria livros:")
+mostrar(estoque.listar_por_categoria("livros"))
 
-print("Remover mochila:", estoque.remover(99))
-print("Buscar mochila:", estoque.buscar_por_codigo(99))
-print("Remover de novo:", estoque.remover(99))
-print("Total nas listas:", len(estoque.produtos), len(estoque.produtos_ordenados))
+print("Estoque baixo (limite 10):")
+mostrar(estoque.estoque_baixo())
+
+estoque.definir_limite(50)
+print("Estoque baixo (limite 50):")
+mostrar(estoque.estoque_baixo())
+
+estoque.definir_limite(0)
+print("Estoque baixo (limite 0):")
+mostrar(estoque.estoque_baixo())

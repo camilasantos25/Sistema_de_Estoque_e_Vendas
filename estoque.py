@@ -2,6 +2,7 @@ class Estoque:
     def __init__(self):
         self.produtos = []
         self.produtos_ordenados = []
+        self.limite_estoque_baixo = 10
 
     def posicao_para_inserir(self, codigo):
         for i in range(len(self.produtos_ordenados)):
@@ -70,3 +71,23 @@ class Estoque:
 
         produto.quantidade = produto.quantidade - quantidade
         return "Ok"
+
+    def listar_ordenado(self):
+        return list(self.produtos_ordenados)
+
+    def listar_por_categoria(self, categoria):
+        encontrados = []
+        for produto in self.produtos_ordenados:
+            if produto.categoria.lower() == categoria.lower():
+                encontrados.append(produto)
+            return encontrados
+
+    def definir_limite(self, limite):
+        self.limite_estoque_baixo = limite
+
+    def estoque_baixo(self):
+        baixos = []
+        for produto in self.produtos_ordenados:
+            if produto.quantidade <= self.limite_estoque_baixo:
+                baixos.append(produto)
+        return baixos
